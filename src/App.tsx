@@ -34,9 +34,16 @@ const App: React.FC = () => {
         value={color}
         onChange={e => setColor(e.target.value)}
       />
-      <button type='button' onClick={toggleDot}>
+      <label htmlFor='scales'>
+        <input
+          type='checkbox'
+          id='scales'
+          name='scales'
+          onClick={toggleDot}
+          checked={isDot}
+        />
         Toggle dot in circle
-      </button>
+      </label>
     </Container>
   )
 }

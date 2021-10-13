@@ -7,8 +7,11 @@ export interface SliderProps {
   max?: number
   step?: number
   color: string | Array<number>
+  circleDotColor?: string
   defaultColor?: string
   showDotInCircle?: boolean
+  thumbRadius?: number
+  miniThumbsShow?: boolean
 }
 
 export interface StyledProps {
@@ -17,14 +20,17 @@ export interface StyledProps {
   max: number
   step: number
   currentWidth: number
-  sliderColor: string | Array<number>
+  sliderColor: string
+  circleDotColor: string
   defaultColor: string
   showDotInCircle: boolean
+  thumbRadius: number
+  miniThumbsShow: boolean
 }
 
 export interface ShadowDotsProps {
   value: number
   width: number
-  color: string | Array<number>
+  color: string
   defaultColor: string
 }

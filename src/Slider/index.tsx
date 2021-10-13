@@ -34,10 +34,10 @@ const SliderStyled = styled.input<StyledProps>`
     left: ${({ currentWidth, value }) => setDotPosition(currentWidth, value)}px;
     height: 22px;
     width: 22px;
-    border-radius: 50%;
-    background: ${({ sliderColor, showDotInCircle }) =>
-      showDotInCircle ? '#fff' : hexToRgb(sliderColor)};
-    border: 8px solid ${({ sliderColor }) => hexToRgb(sliderColor)};
+    border-radius: ${({ thumbRadius }) => `${thumbRadius}%`};
+    background: ${({ sliderColor, circleDotColor, showDotInCircle }) =>
+      showDotInCircle ? circleDotColor : sliderColor};
+    border: 8px solid ${({ sliderColor }) => sliderColor};
     box-shadow: 0px 0px 6px ${({ sliderColor }) => hexToRgb(sliderColor, 0.5)};
     z-index: 99;
   }
@@ -50,10 +50,10 @@ const SliderStyled = styled.input<StyledProps>`
     left: ${({ currentWidth, value }) => setDotPosition(currentWidth, value)}px;
     height: 22px;
     width: 22px;
-    border-radius: 50%;
-    background: ${({ sliderColor, showDotInCircle }) =>
-      showDotInCircle ? '#fff' : hexToRgb(sliderColor)};
-    border: 8px solid ${({ sliderColor }) => hexToRgb(sliderColor)};
+    border-radius: ${({ thumbRadius }) => `${thumbRadius}%`};
+    background: ${({ sliderColor, circleDotColor, showDotInCircle }) =>
+      showDotInCircle ? circleDotColor : sliderColor};
+    border: 8px solid ${({ sliderColor }) => sliderColor};
     box-shadow: 0px 0px 6px ${({ sliderColor }) => hexToRgb(sliderColor, 0.5)};
     box-sizing: border-box;
     z-index: 99;
@@ -63,8 +63,9 @@ const SliderStyled = styled.input<StyledProps>`
   &:after {
     content: '';
     position: absolute;
+    display: ${({ miniThumbsShow }) => (miniThumbsShow ? 'block' : 'none')};
     background: ${({ value, defaultColor, sliderColor }) =>
-      chosenNumber(value) === 0 ? defaultColor : hexToRgb(sliderColor)};
+      chosenNumber(value) === 0 ? defaultColor : sliderColor};
     width: 6px;
     height: 6px;
     border-radius: 50%;
@@ -87,8 +88,11 @@ const Slider: React.FC<SliderProps> = ({
   max = 100,
   step = 10,
   color,
-  defaultColor = '#c4c4c4',
+  circleDotColor = '#fff',
+  defaultColor = '#bd9b9b',
   showDotInCircle = true,
+  thumbRadius = 50,
+  miniThumbsShow = false,
 }): JSX.Element => {
   const [currentWidth, setCurrentWidth] = useState(280)
 
@@ -100,6 +104,7 @@ const Slider: React.FC<SliderProps> = ({
     const newValue = parseInt(event.currentTarget.value, 10)
     setValue(newValue)
   }
+
   return (
     <SliderContainer ref={observe}>
       <SliderStyled
@@ -110,9 +115,12 @@ const Slider: React.FC<SliderProps> = ({
         max={max}
         step={step}
         currentWidth={currentWidth}
-        sliderColor={color}
+        sliderColor={hexToRgb(color)}
+        circleDotColor={hexToRgb(circleDotColor)}
         defaultColor={hexToRgb(defaultColor)}
         showDotInCircle={showDotInCircle}
+        thumbRadius={thumbRadius}
+        miniThumbsShow={miniThumbsShow}
       />
     </SliderContainer>
   )

@@ -1,14 +1,14 @@
-import { Dispatch } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 
 export interface SliderProps {
   value: number
-  setValue: Dispatch<React.SetStateAction<number>>
+  setValue: Dispatch<SetStateAction<number>>
   min?: number
   max?: number
   step?: number
   color: string | Array<number>
-  circleDotColor?: string
-  defaultColor?: string
+  colorCircleDot?: string
+  colorDefault?: string
   showDotInCircle?: boolean
   thumbRadius?: number
   miniThumbsShow?: boolean
@@ -20,9 +20,9 @@ export interface StyledProps {
   max: number
   step: number
   currentWidth: number
-  sliderColor: string
-  circleDotColor: string
-  defaultColor: string
+  colorSlider: string
+  colorCircleDot: string
+  colorDefault: string
   showDotInCircle: boolean
   thumbRadius: number
   miniThumbsShow: boolean
@@ -32,5 +32,5 @@ export interface ShadowDotsProps {
   value: number
   width: number
   color: string
-  defaultColor: string
+  colorDefault: string
 }

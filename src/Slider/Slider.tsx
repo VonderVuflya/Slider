@@ -12,6 +12,7 @@ const Slider: FC<SliderProps> = ({
   min = 10,
   max = 100,
   step = 10,
+  sliderHeight = 4,
   color,
   colorCircleDot = '#fff',
   colorDefault = '#bd9b9b',
@@ -39,6 +40,7 @@ const Slider: FC<SliderProps> = ({
         min={min}
         max={max}
         step={step}
+        sliderHeight={sliderHeight}
         currentWidth={currentWidth}
         colorSlider={sliderService.hexToRgb(color)}
         colorCircleDot={sliderService.hexToRgb(colorCircleDot)}

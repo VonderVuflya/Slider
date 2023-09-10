@@ -10,7 +10,7 @@ export const Container = styled.div`
 export const Slider = styled.input<StyledProps>`
   appearance: none;
   width: 100%;
-  height: 4px;
+  height: ${({ sliderHeight }) => sliderHeight}px;
   padding: 0;
   border-radius: 2px;
   outline: none;
@@ -22,15 +22,16 @@ export const Slider = styled.input<StyledProps>`
   &::-webkit-slider-thumb {
     appearance: none;
     position: absolute;
-    top: 1px;
-    left: ${({ currentWidth, value }) =>
-      sliderService.setDotPosition(currentWidth, value)}px;
+    top: 2px;
+    left: ${({ currentWidth, value, sliderHeight }) =>
+      sliderService.setDotPosition(currentWidth, value, sliderHeight)}px;
     height: 22px;
     width: 22px;
     border-radius: ${({ thumbRadius }) => `${thumbRadius}%`};
     background: ${({ colorSlider, colorCircleDot, showDotInCircle }) =>
       showDotInCircle ? colorCircleDot : colorSlider};
-    border: 8px solid ${({ colorSlider }) => colorSlider};
+    border: ${({ sliderHeight, colorSlider }) =>
+      `${sliderHeight * 2 - 1}px solid ${colorSlider}`};
     box-shadow: 0 0 6px
       ${({ colorSlider }) => sliderService.hexToRgb(colorSlider, 0.5)};
     z-index: 99;
@@ -40,9 +41,9 @@ export const Slider = styled.input<StyledProps>`
   &::-moz-range-thumb {
     appearance: none;
     position: absolute;
-    top: 1px;
-    left: ${({ currentWidth, value }) =>
-      sliderService.setDotPosition(currentWidth, value)}px;
+    top: 2px;
+    left: ${({ currentWidth, value, sliderHeight }) =>
+      sliderService.setDotPosition(currentWidth, value, sliderHeight)}px;
     height: 22px;
     width: 22px;
     border-radius: ${({ thumbRadius }) => `${thumbRadius}%`};
@@ -62,8 +63,8 @@ export const Slider = styled.input<StyledProps>`
     display: ${({ miniThumbsShow }) => (miniThumbsShow ? 'block' : 'none')};
     background: ${({ value, colorDefault, colorSlider }) =>
       sliderService.chosenNumber(value) === 0 ? colorDefault : colorSlider};
-    width: 6px;
-    height: 6px;
+    width: ${({ sliderHeight }) => sliderHeight * 2 - 1}px;
+    height: ${({ sliderHeight }) => sliderHeight * 2 - 1}px;
     border-radius: 50%;
     top: 10px;
     left: 0;

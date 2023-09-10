@@ -3,8 +3,8 @@ import chunk from 'lodash/chunk'
 import { ShadowDotsProps } from './Slider.types'
 
 // corrector – ширина точки
-// w1 – длина/расстояния одного деления (позиция последней точки(ширина - корректор) / 9)
-const w1 = (width: number) => (width - 6) / 9
+// w1 – длина/расстояния одного деления (позиция последней точки(ширина) / 9)
+const w1 = (width: number) => width / 9
 
 const privateMethods = {
   normalizeColor(color: string) {
@@ -18,6 +18,8 @@ const privateMethods = {
     return color
   },
   getShadowArray(width: number, colorDefault: string) {
+    // @NOTE: так как первая точка у нас уже нарисована, осталось нарисовать всего 9 точек
+    // поэтому рисуем их со смещением от первой точки (+ segmentWidth)
     return [...Array(9)].map((_, index) => {
       const segmentWidth = w1(width)
       const dotPosition = index * segmentWidth + segmentWidth
@@ -28,7 +30,6 @@ const privateMethods = {
 
 const sliderService = {
   chosenNumber(value: number) {
-    // @TODO: быть может значение стоит округлять вверх или вниз
     return value / 10 - 1
   },
   getShadowDots({
@@ -45,11 +46,12 @@ const sliderService = {
     })
     return updatedShadow.join(', ')
   },
-  setDotPosition(width: number, value: number) {
+  setDotPosition(width: number, value: number, sliderHeight: number) {
     // valueNumber – на какой позиции мы находимся от 1 до 10
     const valueNumber = value / 10
     const segmentWidth = w1(width)
-    const dotPosition = valueNumber * segmentWidth - segmentWidth - 8
+    const dotPosition =
+      valueNumber * segmentWidth - segmentWidth - (sliderHeight * 2 - 0.5)
     if (valueNumber === 1) return dotPosition
     return dotPosition
   },

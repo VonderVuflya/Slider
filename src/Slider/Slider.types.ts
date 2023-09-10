@@ -6,6 +6,7 @@ export interface SliderProps {
   min?: number
   max?: number
   step?: number
+  sliderHeight?: number
   color: string | Array<number>
   colorCircleDot?: string
   colorDefault?: string
@@ -19,6 +20,7 @@ export interface StyledProps {
   min: number
   max: number
   step: number
+  sliderHeight: number
   currentWidth: number
   colorSlider: string
   colorCircleDot: string

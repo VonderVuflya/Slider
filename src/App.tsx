@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
-import styled from 'styled-components'
-import Slider from './Slider'
+import sliderService from './Slider/Slider.service'
+import Slider from './Slider/Slider'
 
-import { rgbToHex } from './utils/helpers'
+import * as Styled from './App.styled'
 
 // const palete = {
 //   1: '#e8e8db',
@@ -13,37 +13,11 @@ import { rgbToHex } from './utils/helpers'
 //   5: '#494846',
 // }
 
-const SliderBlock = styled.div`
-  width: 600px;
-  /* height: 100px; */
-  padding: 60px 40px;
-  box-sizing: border-box;
-  background-color: rgb(40, 44, 52);
-  border-radius: 12px;
-`
-
-const ParamsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 600px;
-`
-
-const Block = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 80px;
-  margin-top: 20px;
-  margin-right: 20px;
-
-  span {
-    margin-bottom: 8px;
-  }
-`
-
-const App: React.FC = () => {
+const App = () => {
   const [value, setValue] = useState(50)
   const [color, setColor] = useState('#ffdf65')
   const [circleDotColor, setCircleDotColor] = useState('#858377')
+  const [colorDefault, setColorDefault] = useState('#bd9b9b')
   const [isDot, setDot] = useState(true)
   const [isMiniThumbs, setMiniThumbs] = useState(false)
   const [thumbRadius, setThumbRadius] = useState(50)
@@ -52,26 +26,27 @@ const App: React.FC = () => {
   const toggleMinDots = () => setMiniThumbs(!isMiniThumbs)
 
   return (
-    <>
+    <div className='App'>
       <h1>Slider</h1>
 
-      <SliderBlock>
+      <Styled.SliderBlock>
         <Slider
           value={value}
           setValue={setValue}
-          color={color}
           min={10}
           max={100}
           step={10}
-          circleDotColor={circleDotColor}
+          color={color}
+          colorCircleDot={circleDotColor}
+          colorDefault={colorDefault}
           showDotInCircle={isDot}
           thumbRadius={thumbRadius}
           miniThumbsShow={isMiniThumbs}
         />
-      </SliderBlock>
+      </Styled.SliderBlock>
 
-      <ParamsContainer>
-        <Block>
+      <Styled.ParamsContainer>
+        <Styled.Block>
           <span>Value</span>
           <input
             onChange={e => setValue(parseInt(e.target.value, 10))}
@@ -79,9 +54,9 @@ const App: React.FC = () => {
             min='0'
             max='100'
           />
-        </Block>
+        </Styled.Block>
 
-        <Block>
+        <Styled.Block>
           <span>Main color</span>
           <input
             type='color'
@@ -90,21 +65,30 @@ const App: React.FC = () => {
           />
           <input
             type='text'
-            value={rgbToHex(color)}
+            value={sliderService.rgbToHex(color)}
             onChange={e => setColor(e.target.value)}
           />
-        </Block>
+        </Styled.Block>
 
-        <Block>
-          <span>Dot color</span>
+        <Styled.Block>
+          <span>Dot in circle color</span>
           <input
             type='color'
             value={circleDotColor}
             onChange={e => setCircleDotColor(e.target.value)}
           />
-        </Block>
+        </Styled.Block>
 
-        <Block>
+        <Styled.Block>
+          <span>Dots color</span>
+          <input
+            type='color'
+            value={colorDefault}
+            onChange={e => setColorDefault(e.target.value)}
+          />
+        </Styled.Block>
+
+        <Styled.Block>
           <span>Toggle Circle</span>
           <input
             type='range'
@@ -118,16 +102,18 @@ const App: React.FC = () => {
             value={thumbRadius}
             onChange={e => setThumbRadius(+e.currentTarget.value)}
           />
-        </Block>
+        </Styled.Block>
 
-        <Block>
-          <span>Show dots</span>
+        <label htmlFor='dots'>
           <input
             type='checkbox'
+            id='dots'
+            name='dots'
             onClick={toggleMinDots}
             checked={isMiniThumbs}
           />
-        </Block>
+          Show dots
+        </label>
         <label htmlFor='scales'>
           <input
             type='checkbox'
@@ -138,8 +124,8 @@ const App: React.FC = () => {
           />
           Toggle dot in circle
         </label>
-      </ParamsContainer>
-    </>
+      </Styled.ParamsContainer>
+    </div>
   )
 }
 
